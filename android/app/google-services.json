@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "636317528702",
+    "project_id": "recreatemytsel",
+    "storage_bucket": "recreatemytsel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636317528702:android:65753ef2878739ab131e2f",
+        "android_client_info": {
+          "package_name": "com.mytsel.mytsel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636317528702-jhpduiv2m9o3rgjmn1327m846saq6402.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mytsel.mytsel",
+            "certificate_hash": "ae43be75eac1006e532a31cc2aa18a817cfdd498"
+          }
+        },
+        {
+          "client_id": "636317528702-n6i03khttj21m4utgndmbgl4titemd25.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-rpWPaZj4GLCFvq3IDVUXDyAE-umhMjI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636317528702-kpj94er3hnpaqks5j4jhgljdgij3qd47.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "636317528702-au0chos133e85sse11m4bn83udlq04ef.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mytsel.mytsel"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
