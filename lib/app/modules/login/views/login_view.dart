@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,150 +8,182 @@ import 'package:mytsel/app/routes/app_pages.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  final GoogleSignIn _googleSignIn =
-      GoogleSignIn(); // Create an instance of GoogleSignIn
-
-  Future<void> _signInWithEmailAndPassword(BuildContext context) async {
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-      // Handle successful login, e.g., navigate to the next screen
-
-      // Example navigation to a home page
-      Get.to(HomeView());
-    } on FirebaseAuthException catch (e) {
-      // Handle login error, show a snackbar or error message
-      Get.snackbar(
-        "Login Error",
-        e.message!,
-        snackPosition: SnackPosition.TOP,
-      );
-      print("Error: ${e.message}");
-    }
-  }
-
-  Future<void> _signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
-
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuth =
-            await googleSignInAccount.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleSignInAuth.accessToken,
-          idToken: googleSignInAuth.idToken,
-        );
-
-        final UserCredential userCredential =
-            await FirebaseAuth.instance.signInWithCredential(credential);
-
-        // Handle successful Google Sign-In, e.g., navigate to the next screen
-        Get.to(HomeView());
-      }
-    } catch (e) {
-      // Handle Google Sign-In error, show a snackbar or error message
-      Get.snackbar(
-        "Google Sign-In Error",
-        "Failed to sign in with Google.",
-        snackPosition: SnackPosition.TOP,
-      );
-      print("Google Sign-In Error: $e");
-    }
-  }
-
-  Future<void> _signUpWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
-
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuth =
-            await googleSignInAccount.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleSignInAuth.accessToken,
-          idToken: googleSignInAuth.idToken,
-        );
-
-        final UserCredential userCredential =
-            await FirebaseAuth.instance.signInWithCredential(credential);
-
-        final User? user = userCredential.user;
-
-        if (user != null) {
-          // Check if the user is new (just signed up with Google)
-          if (userCredential.additionalUserInfo?.isNewUser == true) {
-            // Automatically update user profile with Google data
-            await user.updateProfile(
-              displayName: user.displayName ?? "New User",
-              photoURL: user.photoURL ?? "",
-            );
-
-            // Show snackbar for successful registration
-            Get.snackbar(
-              "Registration Successful",
-              "Registration completed successfully.",
-              snackPosition: SnackPosition.TOP,
-            );
-          } else {
-            // User is not new, show snackbar indicating user needs to sign in
-            Get.snackbar(
-              "Sign-In Required",
-              "You don't have an account linked to this email. Please sign in.",
-              snackPosition: SnackPosition.TOP,
-            );
-          }
-
-          // Navigate to the home screen after successful sign-up or sign-in
-          Get.to(HomeView());
-        }
-      }
-    } catch (e) {
-      // Handle Google Sign-Up error, show a snackbar or error message
-      Get.snackbar(
-        "Google Sign-Up Error",
-        "Failed to sign up with Google.",
-        snackPosition: SnackPosition.TOP,
-      );
-      print("Google Sign-Up Error: $e");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(children: [
-        Image.asset("assets/logo/logo-login.png"),
-        Text("Silahkan masuk dengan email kamu"),
-        Text("Email"),
-        TextField(
-          controller: _emailController,
-          decoration: InputDecoration(hintText: "Cth. email@domain.com"),
+      body: ListView(padding: EdgeInsets.all(25), children: [
+        Container(
+            alignment: Alignment.centerLeft,
+            height: 250,
+            child: Image.asset("assets/logo/logo-login.png")),
+        Text(
+          "Silahkan masuk dengan email kamu",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        Text("Password"),
+        SizedBox(
+          height: 10,
+        ),
+        Text("Email", style: TextStyle(fontWeight: FontWeight.bold)),
         TextField(
-          controller: _passwordController,
+          controller: controller.emailController,
+          decoration: InputDecoration(
+              hintText: "Cth. email@domain.com", border: OutlineInputBorder()),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text("Password", style: TextStyle(fontWeight: FontWeight.bold)),
+        TextField(
+          controller: controller.passwordController,
           obscureText: true,
-          decoration: InputDecoration(hintText: "Password"),
+          decoration: InputDecoration(
+              hintText: "Password", border: OutlineInputBorder()),
         ),
-        ElevatedButton(
-          onPressed: () => _signInWithEmailAndPassword(context),
-          child: Text("Login"),
+        SizedBox(
+          height: 10,
         ),
-        ElevatedButton(
-          onPressed: _signInWithGoogle, // Call the Google Sign-In function
-          child: Text("Sign In with Google"),
+        Row(
+          children: [
+            Obx(
+              () => Checkbox(
+                activeColor: Colors.red,
+                value: controller.checkC.value,
+                onChanged: (value) => controller.checkC.toggle(),
+              ),
+            ),
+            Expanded(
+              child: RichText(
+                text: TextSpan(
+                    text: "Saya menyetujui ",
+                    style: TextStyle(color: Colors.black),
+                    children: [
+                      TextSpan(
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              print("Klik syarat");
+                            },
+                          text: "syarat",
+                          style: TextStyle(color: Colors.red)),
+                      TextSpan(
+                          text: ", ", style: TextStyle(color: Colors.black)),
+                      TextSpan(
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              print("Klik ketentuan");
+                            },
+                          text: "ketentuan",
+                          style: TextStyle(color: Colors.red)),
+                      TextSpan(
+                          text: ", dan ",
+                          style: TextStyle(color: Colors.black)),
+                      TextSpan(
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              print("Klik privasi");
+                            },
+                          text: "privasi ",
+                          style: TextStyle(color: Colors.red)),
+                      TextSpan(
+                          text: "Telkomsel",
+                          style: TextStyle(color: Colors.black)),
+                    ]),
+              ),
+            )
+          ],
         ),
-        ElevatedButton(
-          onPressed: () => _signUpWithGoogle(),
-          child: Text("Sign Up with Google"),
+        SizedBox(
+          height: 10,
         ),
+        Obx(
+          () => ElevatedButton(
+            onPressed: controller.checkC.value
+                ? () => controller.signInWithEmailAndPassword(context)
+                : () => controller.accept_eula(),
+            child: Text(
+              "MASUK",
+              style: TextStyle(
+                  color: controller.checkC.value
+                      ? Colors.white
+                      : Color(0xFF747D8C)),
+            ),
+            style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    controller.checkC.value ? Colors.red : Colors.grey[300]),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Center(
+          child: Text("Atau masuk menggunakan"),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Obx(
+              () => OutlinedButton(
+                  onPressed: controller.checkC.value
+                      ? () => controller.signInWithGoogle()
+                      : () => controller.accept_eula(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                        image: AssetImage("assets/logo/google.png"),
+                        width: 18,
+                        height: 18,
+                      ),
+                      SizedBox(
+                        width: 7,
+                      ),
+                      Text(
+                        "Google",
+                        style: TextStyle(fontSize: 16, color: Colors.grey[850]),
+                      ),
+                    ],
+                  ),
+                  style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all(Size(150, 50)),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0))),
+                      side: MaterialStateProperty.all(
+                          BorderSide(color: Colors.grey)))),
+            ),
+            Obx(
+              () => OutlinedButton(
+                  onPressed: controller.checkC.value
+                      ? () => controller.signInWithGoogle()
+                      : () => controller.accept_eula(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                        image: AssetImage("assets/logo/facebook.png"),
+                        width: 18,
+                        height: 18,
+                      ),
+                      SizedBox(
+                        width: 7,
+                      ),
+                      Text(
+                        "Facebook",
+                        style:
+                            TextStyle(fontSize: 16, color: Color(0xFF3B5998)),
+                      ),
+                    ],
+                  ),
+                  style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all(Size(150, 50)),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0))),
+                      side: MaterialStateProperty.all(
+                          BorderSide(color: Color(0xFF3B5998))))),
+            ),
+          ],
+        )
       ]),
     );
   }
