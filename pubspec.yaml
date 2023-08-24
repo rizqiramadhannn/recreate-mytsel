@@ -10,6 +10,7 @@ dependencies:
   get: 4.6.5
   flutter:
     sdk: flutter
+  intl: ^0.17.0
   firebase_core_platform_interface: ^4.8.0
   firebase_core: ^2.15.1
   firebase_auth: ^4.7.3
