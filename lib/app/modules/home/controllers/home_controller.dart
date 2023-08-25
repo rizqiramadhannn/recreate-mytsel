@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -13,6 +14,15 @@ class HomeController extends GetxController {
   var sms = ''.obs;
   var isDataFetched = false.obs;
   var bannerUri = [].obs;
+  var selectedLanguage = Get.locale?.languageCode.obs;
+
+  set changeLanguage(String? lang) {
+    if (lang != null) {
+      Locale locale = Locale(lang);
+      Get.updateLocale(locale);
+      selectedLanguage?.value = lang;
+    }
+  }
 
   Future<void> fetchUserData(int userId) async {
     final response = await http

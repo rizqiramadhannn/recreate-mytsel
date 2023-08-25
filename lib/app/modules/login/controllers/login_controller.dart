@@ -8,8 +8,17 @@ import '../../home/views/home_view.dart';
 
 class LoginController extends GetxController {
   var checkC = false.obs;
+  var selectedLanguage = Get.locale?.languageCode.obs;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  set changeLanguage(String? lang) {
+    if (lang != null) {
+      Locale locale = Locale(lang);
+      Get.updateLocale(locale);
+      selectedLanguage?.value = lang;
+    }
+  }
 
   final GoogleSignIn googleSignIn =
       GoogleSignIn(); // Create an instance of GoogleSignIn

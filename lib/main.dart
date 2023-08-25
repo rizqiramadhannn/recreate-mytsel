@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'app/routes/app_pages.dart';
 import 'app/widgets/splash_screen.dart';
+import 'i18n/AppTranslation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,8 +19,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      translationsKeys: AppTranslation.translationsKeys,
+      locale: Get.deviceLocale,
       title: "Application",
-      initialRoute: Routes.HOME,
+      initialRoute: Routes.LOGIN,
       getPages: AppPages.routes,
     );
     return FutureBuilder(

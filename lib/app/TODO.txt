@@ -1,0 +1,6 @@
+- plugin convert png to svg -> quick trace (gabisa gambar kompleks)
+- implementasi i18n
+    - Login
+    - Home
+    - Login Notif
+- implementasi model

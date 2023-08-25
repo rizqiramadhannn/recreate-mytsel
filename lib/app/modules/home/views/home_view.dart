@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
@@ -25,7 +26,7 @@ class HomeView extends GetView<HomeController> {
                 centerTitle: false,
                 title: RichText(
                   text: TextSpan(
-                      text: "Hai, ",
+                      text: "homepage-greeting".tr,
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -37,13 +38,20 @@ class HomeView extends GetView<HomeController> {
                       ]),
                 ),
                 actions: [
-                  GestureDetector(
-                    onTap: () => {},
-                    child: Container(
-                      child: Image.asset("assets/logo/barcode.png"),
-                      width: 50,
-                      height: 50,
-                    ),
+                  // GestureDetector(
+                  //   onTap: () => {},
+                  //   child: Container(
+                  //     child: SvgPicture.asset(
+                  //       "assets/logo/qr.svg",
+                  //     ),
+                  //     width: 20,
+                  //     height: 20,
+                  //     margin: EdgeInsets.only(right: 20),
+                  //   ),
+                  // )
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: languageChooser(),
                   )
                 ],
                 backgroundColor: Color(0xFFEC2028),
@@ -98,14 +106,15 @@ class HomeView extends GetView<HomeController> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16),
                                           ),
-                                          Image.asset("assets/logo/simpati.png")
+                                          SvgPicture.asset(
+                                              "assets/logo/simpati.svg")
                                         ],
                                       ),
                                       SizedBox(
                                         height: 20,
                                       ),
                                       Text(
-                                        "Sisa pulsa anda",
+                                        "homepage-credit".tr,
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,
@@ -130,7 +139,7 @@ class HomeView extends GetView<HomeController> {
                                                       Colors.amber),
                                               onPressed: () => {},
                                               child: Text(
-                                                "Isi Pulsa",
+                                                "homepage-add_credit".tr,
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 16),
@@ -143,7 +152,9 @@ class HomeView extends GetView<HomeController> {
                                       Obx(
                                         () => RichText(
                                             text: TextSpan(
-                                                text: "Berlaku sampai ",
+                                                text:
+                                                    "homepage-expire_date".tr +
+                                                        " ",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 16),
@@ -200,17 +211,17 @@ class HomeView extends GetView<HomeController> {
                                 child: Row(
                                   children: [
                                     Card(
-                                      title: "Internet",
+                                      title: "homepage-internet".tr,
                                       data: controller.internet.value,
                                       satuan: "GB",
                                     ),
                                     Card(
-                                      title: "Telpon",
+                                      title: "homepage-call".tr,
                                       data: controller.telpon.value,
                                       satuan: "Min",
                                     ),
                                     Card(
-                                      title: "SMS",
+                                      title: "homepage-sms".tr,
                                       data: controller.sms.value,
                                       satuan: "SMS",
                                     )
@@ -233,7 +244,7 @@ class HomeView extends GetView<HomeController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Kategori Paket",
+                                    "homepage-category".tr,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 18),
@@ -245,19 +256,19 @@ class HomeView extends GetView<HomeController> {
                                     children: [
                                       RoundedMenu(
                                           img:
-                                              "assets/elements/home_internet.png",
-                                          title: "Internet"),
+                                              "assets/elements/home_internet.svg",
+                                          title: "homepage-internet".tr),
                                       RoundedMenu(
                                           img:
-                                              "assets/elements/home_telpon.png",
-                                          title: "Telpon"),
+                                              "assets/elements/home_telpon.svg",
+                                          title: "homepage-call".tr),
                                       RoundedMenu(
-                                          img: "assets/elements/home_pesan.png",
-                                          title: "SMS"),
+                                          img: "assets/elements/home_pesan.svg",
+                                          title: "homepage-sms".tr),
                                       RoundedMenu(
                                           img:
-                                              "assets/elements/home_roaming.png",
-                                          title: "Roaming")
+                                              "assets/elements/home_roaming.svg",
+                                          title: "homepage-roaming".tr)
                                     ],
                                   ),
                                   SizedBox(
@@ -267,20 +278,20 @@ class HomeView extends GetView<HomeController> {
                                     children: [
                                       RoundedMenu(
                                           img:
-                                              "assets/elements/home_hiburan.png",
-                                          title: "Hiburan"),
+                                              "assets/elements/home_hiburan.svg",
+                                          title: "homepage-enternainment".tr),
                                       RoundedMenu(
                                           img:
-                                              "assets/elements/home_unggulan.png",
-                                          title: "Unggulan"),
+                                              "assets/elements/home_unggulan.svg",
+                                          title: "homepage-superior".tr),
                                       RoundedMenu(
                                           img:
-                                              "assets/elements/home_tersimpan.png",
-                                          title: "Tersimpan"),
+                                              "assets/elements/home_tersimpan.svg",
+                                          title: "homepage-saved".tr),
                                       RoundedMenu(
                                           img:
-                                              "assets/elements/home_riwayat.png",
-                                          title: "Riwayat")
+                                              "assets/elements/home_riwayat.svg",
+                                          title: "homepage-history".tr)
                                     ],
                                   ),
                                   SizedBox(
@@ -291,13 +302,13 @@ class HomeView extends GetView<HomeController> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Terbaru dari Telkomsel",
+                                        "homepage-latest_offer".tr,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 18),
                                       ),
                                       Text(
-                                        "Lihat Semua",
+                                        "homepage-see_all".tr,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 14,
@@ -327,7 +338,7 @@ class HomeView extends GetView<HomeController> {
                                     height: 15,
                                   ),
                                   Text(
-                                    "Tanggap COVID-19",
+                                    "homepage-covid_banner".tr,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 18),
@@ -340,86 +351,21 @@ class HomeView extends GetView<HomeController> {
                                     child: ListView(
                                       scrollDirection: Axis.horizontal,
                                       children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.5),
-                                                  spreadRadius: 2,
-                                                  blurRadius: 5,
-                                                  offset: Offset(0, 3),
-                                                ),
-                                              ],
-                                              borderRadius:
-                                                  BorderRadius.circular(4)),
-                                          width: 248,
-                                          margin: EdgeInsets.only(right: 10),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                height:
-                                                    112, // Adjust the width as needed
-                                                child: Image.asset(
-                                                    "assets/elements/banner_covid1.png"), // Replace with your first banner widget
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.all(10),
-                                                child: Text(
-                                                  "Diskon Spesial 25% Untuk Pelanggan Baru",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 16),
-                                                ),
-                                              ),
-                                            ],
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.5),
-                                                  spreadRadius: 2,
-                                                  blurRadius: 5,
-                                                  offset: Offset(0, 3),
-                                                ),
-                                              ],
-                                              borderRadius:
-                                                  BorderRadius.circular(4)),
-                                          width: 248,
-                                          margin: EdgeInsets.only(right: 10),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                height:
-                                                    112, // Adjust the width as needed
-                                                child: Image.asset(
-                                                    "assets/elements/banner_covid2.png"), // Replace with your first banner widget
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.all(10),
-                                                child: Text(
-                                                  "Bebas Kuota Akses Layanan Kesehatan",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 16),
-                                                ),
-                                              ),
-                                            ],
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                          ),
-                                        ),
+                                        CardImg(
+                                            title:
+                                                "Diskon Spesial 25% Untuk Pelanggan Baru",
+                                            img:
+                                                "assets/elements/banner_covid1.png"),
+                                        CardImg(
+                                            title:
+                                                "Bebas Kuota Akses Layanan Kesehatan",
+                                            img:
+                                                "assets/elements/banner_covid2.png"),
                                       ],
                                     ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
                                   )
                                 ],
                               ),
@@ -444,6 +390,85 @@ class HomeView extends GetView<HomeController> {
             );
           }
         });
+  }
+
+  Container languageChooser() {
+    return Container(
+      decoration: BoxDecoration(
+          color: Color(0xEFF7B731),
+          border: Border.all(color: Colors.white), // Add border styling
+          borderRadius: BorderRadius.circular(8),
+          gradient: LinearGradient(colors: [
+            Color(0xFFE52D27),
+            Color(0xFFB31217)
+          ]) // Add border radius if needed
+          ),
+      padding: EdgeInsets.fromLTRB(9, 4, 9, 4),
+      width: 110, // Set the desired width for the Container
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          isExpanded: true,
+          dropdownColor: Color(0xFFB31217),
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: Colors.white,
+          ),
+          hint: Text('Please choose a language'),
+          value: controller.selectedLanguage?.value,
+          onChanged: (languageCode) {
+            controller.changeLanguage = languageCode!;
+          },
+          items: [
+            DropdownMenuItem<String>(
+              value: 'id',
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/elements/id_flag.svg', // Replace with the actual path to your SVG flag image
+                    width: 24,
+                    height: 24,
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    'ID',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+            DropdownMenuItem<String>(
+              value: 'en_US',
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/elements/us_flag.svg', // Replace with the actual path to your SVG flag image
+                        width: 24,
+                        height: 24,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'EN',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -528,6 +553,37 @@ class Card extends StatelessWidget {
   }
 }
 
+class CardImg extends StatelessWidget {
+  const CardImg({super.key, required this.title, required this.img});
+  final String title;
+  final String img;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(4)),
+      width: 248,
+      margin: EdgeInsets.only(right: 10),
+      child: Column(
+        children: [
+          Container(
+            height: 112, // Adjust the width as needed
+            child: Image.asset(img), // Replace with your first banner widget
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+            ),
+          ),
+        ],
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      ),
+    );
+  }
+}
+
 class RoundedMenu extends StatelessWidget {
   const RoundedMenu({super.key, required this.img, required this.title});
   final String img;
@@ -537,7 +593,7 @@ class RoundedMenu extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
-          Image.asset(img),
+          SvgPicture.asset(img),
           SizedBox(
             height: 8,
           ),
