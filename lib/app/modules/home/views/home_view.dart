@@ -1,11 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import '../controllers/home_controller.dart';
-import 'package:mytsel/app/widgets/barcode_scanner_widget.dart'; // Import the barcode scanner widget
 
 class HomeView extends GetView<HomeController> {
   @override
@@ -203,158 +199,21 @@ class HomeView extends GetView<HomeController> {
                                 margin: EdgeInsets.all(25),
                                 child: Row(
                                   children: [
-                                    Expanded(
-                                      child: Container(
-                                        padding: EdgeInsets.all(10),
-                                        margin: EdgeInsets.only(right: 10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.2),
-                                              spreadRadius: 2,
-                                              blurRadius: 8,
-                                              offset: Offset(0,
-                                                  3), // changes the position of the shadow
-                                            ),
-                                          ],
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Internet"),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Obx(
-                                              () => RichText(
-                                                  text: TextSpan(
-                                                      text: controller
-                                                          .internet.value,
-                                                      style: TextStyle(
-                                                          color: Colors.red,
-                                                          fontSize: 22,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                      children: [
-                                                    TextSpan(
-                                                      text: " GB",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Colors.grey[400],
-                                                          fontSize: 18),
-                                                    )
-                                                  ])),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                    Card(
+                                      title: "Internet",
+                                      data: controller.internet.value,
+                                      satuan: "GB",
                                     ),
-                                    Expanded(
-                                      child: Container(
-                                        padding: EdgeInsets.all(10),
-                                        margin: EdgeInsets.only(right: 10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.2),
-                                              spreadRadius: 2,
-                                              blurRadius: 8,
-                                              offset: Offset(0,
-                                                  3), // changes the position of the shadow
-                                            ),
-                                          ],
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Telpon"),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Obx(
-                                              () => RichText(
-                                                  text: TextSpan(
-                                                      text: controller
-                                                          .telpon.value,
-                                                      style: TextStyle(
-                                                          color: Colors.red,
-                                                          fontSize: 22,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                      children: [
-                                                    TextSpan(
-                                                      text: " Min",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Colors.grey[400],
-                                                          fontSize: 18),
-                                                    )
-                                                  ])),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                    Card(
+                                      title: "Telpon",
+                                      data: controller.telpon.value,
+                                      satuan: "Min",
                                     ),
-                                    Expanded(
-                                      child: Container(
-                                        padding: EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.2),
-                                              spreadRadius: 2,
-                                              blurRadius: 8,
-                                              offset: Offset(0,
-                                                  3), // changes the position of the shadow
-                                            ),
-                                          ],
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text("SMS"),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Obx(
-                                              () => RichText(
-                                                  text: TextSpan(
-                                                      text:
-                                                          controller.sms.value,
-                                                      style: TextStyle(
-                                                          color: Colors.red,
-                                                          fontSize: 22,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                      children: [
-                                                    TextSpan(
-                                                      text: " SMS",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Colors.grey[400],
-                                                          fontSize: 18),
-                                                    )
-                                                  ])),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                                    Card(
+                                      title: "SMS",
+                                      data: controller.sms.value,
+                                      satuan: "SMS",
+                                    )
                                   ],
                                 ),
                               )
@@ -384,70 +243,21 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                   Row(
                                     children: [
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                                "assets/elements/home_internet.png"),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text(
-                                              "Internet",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                                "assets/elements/home_telpon.png"),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text(
-                                              "Telpon",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                                "assets/elements/home_pesan.png"),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text(
-                                              "SMS",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                                "assets/elements/home_roaming.png"),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text(
-                                              "Roaming",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                      )
+                                      RoundedMenu(
+                                          img:
+                                              "assets/elements/home_internet.png",
+                                          title: "Internet"),
+                                      RoundedMenu(
+                                          img:
+                                              "assets/elements/home_telpon.png",
+                                          title: "Telpon"),
+                                      RoundedMenu(
+                                          img: "assets/elements/home_pesan.png",
+                                          title: "SMS"),
+                                      RoundedMenu(
+                                          img:
+                                              "assets/elements/home_roaming.png",
+                                          title: "Roaming")
                                     ],
                                   ),
                                   SizedBox(
@@ -455,70 +265,22 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                   Row(
                                     children: [
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                                "assets/elements/home_hiburan.png"),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text(
-                                              "Hiburan",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                                "assets/elements/home_unggulan.png"),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text(
-                                              "Unggulan",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                                "assets/elements/home_tersimpan.png"),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text(
-                                              "Tersimpan",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                                "assets/elements/home_riwayat.png"),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text(
-                                              "Riwayat",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                      )
+                                      RoundedMenu(
+                                          img:
+                                              "assets/elements/home_hiburan.png",
+                                          title: "Hiburan"),
+                                      RoundedMenu(
+                                          img:
+                                              "assets/elements/home_unggulan.png",
+                                          title: "Unggulan"),
+                                      RoundedMenu(
+                                          img:
+                                              "assets/elements/home_tersimpan.png",
+                                          title: "Tersimpan"),
+                                      RoundedMenu(
+                                          img:
+                                              "assets/elements/home_riwayat.png",
+                                          title: "Riwayat")
                                     ],
                                   ),
                                   SizedBox(
@@ -699,4 +461,92 @@ class ClipInfoClass extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
+}
+
+class BottomNav extends StatelessWidget {
+  const BottomNav({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[Container(height: 30, child: Icon(Icons.home))],
+    );
+  }
+}
+
+class Card extends StatelessWidget {
+  const Card(
+      {super.key,
+      required this.title,
+      required this.data,
+      required this.satuan});
+  final String title;
+  final String data;
+  final String satuan;
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.only(right: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(4),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 8,
+              offset: Offset(0, 3), // changes the position of the shadow
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title),
+            SizedBox(
+              height: 8,
+            ),
+            RichText(
+                text: TextSpan(
+                    text: data,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold),
+                    children: [
+                  TextSpan(
+                    text: " " + satuan,
+                    style: TextStyle(color: Colors.grey[400], fontSize: 18),
+                  )
+                ])),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class RoundedMenu extends StatelessWidget {
+  const RoundedMenu({super.key, required this.img, required this.title});
+  final String img;
+  final String title;
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        children: [
+          Image.asset(img),
+          SizedBox(
+            height: 8,
+          ),
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.w500),
+          )
+        ],
+      ),
+    );
+  }
 }
