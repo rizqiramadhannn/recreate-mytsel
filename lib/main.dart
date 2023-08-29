@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       translationsKeys: AppTranslation.translationsKeys,
       locale: Get.deviceLocale,
       title: "Application",
-      initialRoute: Routes.LOGIN,
+      initialRoute: Routes.HOME,
       getPages: AppPages.routes,
     );
     return FutureBuilder(

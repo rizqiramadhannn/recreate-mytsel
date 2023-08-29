@@ -1,17 +1,15 @@
-import 'dart:convert';
 import 'dart:ui';
-import 'package:http/http.dart' as http;
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mytsel/app/api/ApiProvider.dart';
+import 'homeService.dart';
+import '../../../models/user.dart';
 
 class HomeController extends GetxController {
-  var userName = ''.obs; // Initialize with an empty string
-  var phoneNumber = ''.obs;
-  var numExpDate = ''.obs;
-  var pulsa = ''.obs;
-  var internet = ''.obs;
-  var telpon = ''.obs;
-  var sms = ''.obs;
+  final ApiProvider _apiProvider = ApiProvider();
+  final HomeService _homeService = HomeService();
+  Rx<User> userData = Rx<User>(User(id: ''));
   var isDataFetched = false.obs;
   var bannerUri = [].obs;
   var selectedLanguage = Get.locale?.languageCode.obs;
@@ -25,51 +23,53 @@ class HomeController extends GetxController {
   }
 
   Future<void> fetchUserData(int userId) async {
-    final response = await http
-        .get(Uri.parse('https://64d0b6a3ff953154bb795517.mockapi.io/user'));
-    if (response.statusCode == 200) {
-      final List<dynamic> userList = json.decode(response.body);
-      final user = userList.firstWhere(
-          (user) => user['id'] == userId.toString(),
-          orElse: () => null);
+    try {
+      var response = await _homeService.getUserData(userId);
 
-      if (user != null) {
-        print(response.statusCode);
-        userName = user['name'].toString().obs;
-        phoneNumber = user['phoneNumber'].toString().obs;
-        numExpDate = DateFormat('dd-MM-yyyy')
-            .format(DateTime.parse(user['expired']))
-            .toString()
-            .obs;
-        pulsa = NumberFormat.currency(
-                locale: 'id_ID', symbol: 'Rp.', decimalDigits: 0)
-            .format(double.parse(user['pulsa']))
-            .obs;
-        internet = (double.parse(user['internet']) / (1024 * 1024))
-            .toStringAsFixed(2)
-            .obs;
-        telpon = user['telpon'].toString().obs;
-        sms = user['sms'].toString().obs;
+      if (response.status.hasError) {
+        print("Error: ${response.statusText}");
+        // Handle error if needed
+      } else {
+        var userJson = response.body as Map<String, dynamic>;
+        userData = User(
+          id: userJson['id'],
+          name: userJson['name']?.toString(),
+          phoneNumber: userJson['phoneNumber']?.toString(),
+          numExpDate: DateFormat('dd-MM-yyyy')
+              .format(DateTime.parse(userJson['expired']))
+              .toString(),
+          pulsa: NumberFormat.currency(
+                  locale: 'id_ID', symbol: 'Rp.', decimalDigits: 0)
+              .format(double.parse(userJson['pulsa'])),
+          internet: (double.parse(userJson['internet']) / (1024 * 1024))
+              .toStringAsFixed(2),
+          telpon: userJson['telpon']?.toString(),
+          sms: userJson['sms']?.toString(),
+        ).obs; // Assign the User object to userData
         isDataFetched.value = true;
       }
-    } else {
-      throw Exception('Failed to fetch data');
+    } catch (e) {
+      print("Exception: $e");
+      // Handle exceptions// Replace with the appropriate error handling
     }
   }
 
   Future<void> fetchBanner() async {
-    final response = await http
-        .get(Uri.parse('https://64d0b6a3ff953154bb795517.mockapi.io/banner'));
-    if (response.statusCode == 200) {
-      final List<dynamic> bannerList = json.decode(response.body);
-      print(response.statusCode);
-      for (int i = 0; i < bannerList.length; i++) {
-        var current = bannerList[i];
-        bannerUri.add(current['url']);
+    try {
+      var response = await _homeService.getBanner();
+      if (response.status.hasError) {
+        print("Error: ${response.statusText}");
+        // Handle error if needed
+      } else {
+        print(response.body);
+        var bannerList = response.body;
+        for (int i = 0; i < bannerList.length; i++) {
+          print((bannerList[i])['url']);
+          bannerUri.add((bannerList[i])['url']);
+        }
       }
-      print(bannerUri);
-    } else {
-      throw Exception('Failed to fetch data');
+    } catch (e) {
+      print("Exception: $e");
     }
   }
 

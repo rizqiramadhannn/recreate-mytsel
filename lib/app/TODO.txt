@@ -2,5 +2,4 @@
 - implementasi i18n
     - Login
     - Home
-    - Login Notif
 - implementasi model

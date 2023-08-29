@@ -32,7 +32,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                       children: [
                         TextSpan(
-                            text: controller.userName.value,
+                            text: controller.userData.value.name,
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold))
                       ]),
@@ -100,7 +100,8 @@ class HomeView extends GetView<HomeController> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            controller.phoneNumber.value,
+                                            controller
+                                                .userData.value.phoneNumber!,
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
@@ -126,7 +127,7 @@ class HomeView extends GetView<HomeController> {
                                         children: [
                                           Obx(
                                             () => Text(
-                                              controller.pulsa.value,
+                                              controller.userData.value.pulsa!,
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
@@ -160,8 +161,8 @@ class HomeView extends GetView<HomeController> {
                                                     fontSize: 16),
                                                 children: [
                                               TextSpan(
-                                                text:
-                                                    controller.numExpDate.value,
+                                                text: controller
+                                                    .userData.value.numExpDate,
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight: FontWeight.bold,
@@ -212,17 +213,17 @@ class HomeView extends GetView<HomeController> {
                                   children: [
                                     Card(
                                       title: "homepage-internet".tr,
-                                      data: controller.internet.value,
+                                      data: controller.userData.value.internet!,
                                       satuan: "GB",
                                     ),
                                     Card(
                                       title: "homepage-call".tr,
-                                      data: controller.telpon.value,
+                                      data: controller.userData.value.telpon!,
                                       satuan: "Min",
                                     ),
                                     Card(
                                       title: "homepage-sms".tr,
-                                      data: controller.sms.value,
+                                      data: controller.userData.value.sms!,
                                       satuan: "SMS",
                                     )
                                   ],

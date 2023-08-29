@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../api/ApiProvider.dart';
 import '../../../routes/app_pages.dart';
 import '../../home/views/home_view.dart';
 
