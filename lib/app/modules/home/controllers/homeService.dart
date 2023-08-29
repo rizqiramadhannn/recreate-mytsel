@@ -5,7 +5,6 @@ import '../../../models/user.dart';
 import 'package:mytsel/config/api.dart';
 
 class HomeService extends ApiProvider {
-  onInit();
-  Future<Response> getUserData(int id) => get('${api.baseUrl}user/${id}');
-  Future<Response> getBanner() => get('${api.baseUrl}banner');
+  Future<Response> getUserData(int id) => get('user/${id}');
+  Future<Response> getBanner() => get('banner');
 }

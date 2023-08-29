@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,6 +6,7 @@ import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
+  UserCredential userCredential = Get.find<UserCredential>();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -32,7 +34,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                       children: [
                         TextSpan(
-                            text: controller.userData.value.name,
+                            text: userCredential.user?.displayName,
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold))
                       ]),

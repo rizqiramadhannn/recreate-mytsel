@@ -7,8 +7,7 @@ import 'homeService.dart';
 import '../../../models/user.dart';
 
 class HomeController extends GetxController {
-  final ApiProvider _apiProvider = ApiProvider();
-  final HomeService _homeService = HomeService();
+  final HomeService _homeService = GetInstance().find<HomeService>();
   Rx<User> userData = Rx<User>(User(id: ''));
   var isDataFetched = false.obs;
   var bannerUri = [].obs;
@@ -25,32 +24,14 @@ class HomeController extends GetxController {
   Future<void> fetchUserData(int userId) async {
     try {
       var response = await _homeService.getUserData(userId);
-
       if (response.status.hasError) {
         print("Error: ${response.statusText}");
-        // Handle error if needed
       } else {
-        var userJson = response.body as Map<String, dynamic>;
-        userData = User(
-          id: userJson['id'],
-          name: userJson['name']?.toString(),
-          phoneNumber: userJson['phoneNumber']?.toString(),
-          numExpDate: DateFormat('dd-MM-yyyy')
-              .format(DateTime.parse(userJson['expired']))
-              .toString(),
-          pulsa: NumberFormat.currency(
-                  locale: 'id_ID', symbol: 'Rp.', decimalDigits: 0)
-              .format(double.parse(userJson['pulsa'])),
-          internet: (double.parse(userJson['internet']) / (1024 * 1024))
-              .toStringAsFixed(2),
-          telpon: userJson['telpon']?.toString(),
-          sms: userJson['sms']?.toString(),
-        ).obs; // Assign the User object to userData
+        userData = User.fromJson(response.body as Map<String, dynamic>).obs;
         isDataFetched.value = true;
       }
     } catch (e) {
       print("Exception: $e");
-      // Handle exceptions// Replace with the appropriate error handling
     }
   }
 

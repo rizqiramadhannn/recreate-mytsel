@@ -58,10 +58,12 @@ class LoginController extends GetxController {
           accessToken: googleSignInAuth.accessToken,
           idToken: googleSignInAuth.idToken,
         );
-
+        print(googleSignInAuth.idToken);
+        print(credential);
         final UserCredential userCredential =
             await FirebaseAuth.instance.signInWithCredential(credential);
-
+        print(userCredential);
+        Get.put<UserCredential>(userCredential);
         // Handle successful Google Sign-In, e.g., navigate to the next screen
         Get.offAllNamed(Routes.HOME);
       } else {
