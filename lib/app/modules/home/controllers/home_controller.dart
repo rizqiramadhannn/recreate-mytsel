@@ -45,8 +45,10 @@ class HomeController extends GetxController {
         print(response.body);
         var bannerList = response.body;
         for (int i = 0; i < bannerList.length; i++) {
-          print((bannerList[i])['url']);
-          bannerUri.add((bannerList[i])['url']);
+          if ((bannerList[i])['URL'] != '') {
+            print((bannerList[i])['URL']);
+            bannerUri.add((bannerList[i])['URL']);
+          }
         }
       }
     } catch (e) {
