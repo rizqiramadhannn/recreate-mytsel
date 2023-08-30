@@ -107,7 +107,8 @@ class LoginView extends GetView<LoginController> {
         Obx(
           () => ElevatedButton(
             onPressed: controller.checkC.value
-                ? () => controller.signInWithEmailAndPassword(context)
+                // ? () => controller.signInWithEmailAndPassword(context)
+                ? () => controller.performLogin()
                 : () => controller.accept_eula(),
             child: Text(
               "login-button_text".tr,
@@ -136,7 +137,7 @@ class LoginView extends GetView<LoginController> {
             Obx(
               () => OutlinedButton(
                   onPressed: controller.checkC.value
-                      ? () => controller.signInWithGoogle()
+                      ? () => controller.performLogin()
                       : () => controller.accept_eula(),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -165,7 +166,7 @@ class LoginView extends GetView<LoginController> {
             Obx(
               () => OutlinedButton(
                   onPressed: controller.checkC.value
-                      ? () => controller.signInWithGoogle()
+                      ? () => controller.performLogin()
                       : () => controller.accept_eula(),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -239,7 +240,7 @@ class LoginView extends GetView<LoginController> {
               ),
             ),
             DropdownMenuItem<String>(
-              value: 'en_US',
+              value: 'en',
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,

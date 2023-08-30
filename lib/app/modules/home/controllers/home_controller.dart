@@ -8,7 +8,7 @@ import '../../../models/user.dart';
 
 class HomeController extends GetxController {
   final HomeService _homeService = GetInstance().find<HomeService>();
-  Rx<User> userData = Rx<User>(User(id: ''));
+  Rx<User> userData = Rx<User>(User(id: -1));
   var isDataFetched = false.obs;
   var bannerUri = [].obs;
   var selectedLanguage = Get.locale?.languageCode.obs;

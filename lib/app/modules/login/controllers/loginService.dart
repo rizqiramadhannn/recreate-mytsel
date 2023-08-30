@@ -7,12 +7,11 @@ import '../../../models/LoginPayload.dart';
 import '../../../models/LoginResponse.dart';
 
 class LoginService extends ApiProvider {
-  Future<Response<LoginResponse>> Login(LoginPayload payload) =>
-      post<LoginResponse>('api/v1/login', payload.toJson(),
-          decoder: (obj) => LoginResponse.fromJson(obj));
-
+  Future<Response> Login(LoginPayload payload) =>
+      post('/login', payload.toJson());
+  Future<Response> getUserData(String email) => get('/user/${email}');
   Future<Response<LoginGoogleResponse>> LoginGoogle(
           LoginGooglePayload payload) =>
-      post<LoginGoogleResponse>('api/v1/login_google', payload.toJson(),
+      post<LoginGoogleResponse>('/login_google', payload.toJson(),
           decoder: (obj) => LoginGoogleResponse.fromJson(obj));
 }

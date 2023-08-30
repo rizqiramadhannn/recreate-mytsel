@@ -1,6 +1,6 @@
 abstract class AppTranslation {
   static Map<String, Map<String, String>> translationsKeys = {
-    "en_US": enUS,
+    "en": enUS,
     "id": id
   };
 }
