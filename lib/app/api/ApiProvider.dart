@@ -20,6 +20,7 @@ class ApiProvider extends GetConnect {
       print("URL Path : ${request.url.path}");
       print("Status code : ${response.status.code}");
       print("Response body : ${jsonEncode(response.body)}");
+      print("Token : ${token}");
       print("============ END RESPONSE ============");
 
       if (response.status.code == 401 && !request.url.path.contains("login")) {

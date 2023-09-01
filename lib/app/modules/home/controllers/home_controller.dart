@@ -21,14 +21,13 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> fetchUserData(int userId) async {
+  Future<void> fetchUserData() async {
     try {
-      var response = await _homeService.getUserData(userId);
+      var response = await _homeService.getUserData();
       if (response.status.hasError) {
         print("Error: ${response.statusText}");
       } else {
         userData = User.fromJson(response.body as Map<String, dynamic>).obs;
-        isDataFetched.value = true;
       }
     } catch (e) {
       print("Exception: $e");

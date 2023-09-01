@@ -1,8 +1,10 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mytsel/app/modules/login/controllers/loginService.dart';
+import '../../../../const/storage_key.dart';
 import '../../../models/LoginPayload.dart';
 import '../../../models/LoginResponse.dart';
 import '../../../models/user.dart';
@@ -13,7 +15,7 @@ class LoginController extends GetxController {
   var selectedLanguage = Get.locale?.languageCode.obs;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final LoginService _loginService = GetInstance().find<LoginService>();
+  LoginService _loginService = GetInstance().find<LoginService>();
 
   set changeLanguage(String? lang) {
     if (lang != null) {
@@ -26,7 +28,7 @@ class LoginController extends GetxController {
   Future<void> performLogin() async {
     String email = emailController.text;
     String password = passwordController.text;
-
+    print("halo");
     if (email.isEmpty || password.isEmpty) {
       // Display an error message using Get.snackbar
       Get.snackbar('Error', 'Please fill in both email and password.');
@@ -39,8 +41,7 @@ class LoginController extends GetxController {
       var response = await _loginService.Login(payload);
       if (response.statusCode == 200) {
         // Successful login, navigate to the next screen using Get.to
-        Get.put<User>(await fetchUserData(email));
-        print(LoginResponse);
+        GetStorage().write(StorageKey.jwt, response.body['token']);
         // Handle successful Google Sign-In, e.g., navigate to the next screen
         Get.offAllNamed(Routes.HOME);
       } else {
